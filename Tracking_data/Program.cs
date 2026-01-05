@@ -1,7 +1,20 @@
 ﻿using Tracking_data.Hepler;
 using Tracking_data.Repositories;
+using Microsoft.AspNetCore.Http.Features;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+// 🔥 BẮT BUỘC – GỠ LIMIT 50MB
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = long.MaxValue;
+});
+
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = long.MaxValue;
+});
 
 // Thêm service Repository
 builder.Services.AddSingleton<oracle_helper>();

@@ -1,0 +1,39 @@
+10.120.14.240   ---- máy chủ cập nhật sản lượng rms 
+wrpc123
+
+10.12.57.10 it$123 --- máy label 
+
+
+10.120.32.250 administrator avc*adm^1920
+view : thuy././0211    (ctr alt del để mở khóa dùng xong lock mới được tắt)
+10.120.32.250:63596
+10.120.32.250\admin-avc
+printing%123
+
+
+10.120.15.43:63596 printing%123 ---- máy chủ trạm test get PN
+
+
+N-G24080270-3-1-1 N
+
+
+IP: 10.120.15.199
+User: sfis1
+anydesk pass :admin@123
+Pw computer: Sfis@123654
+Em có thể dung anydesk hoặc remote desktop với port 63596
+
+Note: Chỉ sử dụng máy để thiết lập chương trình gửi mail cảnh báo. Không cài đặt sử dụng các phần mềm khác.
+Thanks
+
+
+2--send OW BP3 remote desktop: 10.120.14.248 ---pass:  cnc%123
+name: Administrator
+pass: cnc%123
+
+
+.\admin-avc pass avctl3@2024
+
+
+
+MT002 check liệu
