@@ -3,17 +3,19 @@ using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using Tracking_data.Model;
 using Tracking_data.Hepler;
+using Microsoft.Data.SqlClient;
 
 namespace Tracking_data.Repositories
 {
     public class DataRepository
     {
         
-        private readonly oracle_helper _db;
-
-        public DataRepository(oracle_helper db)
+        private readonly oracle_helper _db_orcl;
+        private readonly sql_helper _sql_helper;
+        public DataRepository(oracle_helper db , sql_helper sql_Helper)
         {
-            _db = db;
+            _db_orcl = db;
+            _sql_helper = sql_Helper;
         }
 
 
@@ -27,7 +29,7 @@ namespace Tracking_data.Repositories
             WHERE emp_no = :emp_no and CLASS_NAME=:class_name
         ";
 
-            var reader = _db.oracle_reader(
+            var reader = _db_orcl.oracle_reader(
                 sql,
                 new OracleParameter(":emp_no", emp_no),
                 new OracleParameter(":class_name", class_name)
@@ -43,6 +45,31 @@ namespace Tracking_data.Repositories
                 password = reader.GetString(3),
             };
         
-    }
+        }
+
+        public Avc_userinfo user_info(string emp , string c_mail)
+        {
+            string sql = "SELECT emp_no , emp_cname , emp_birthday , emp_efdte1 , emp_addr , emp_qdate , emp_email " +
+                "FROM RMS.dbo.emp_mstr a " +
+                "where    a.emp_no  = @emp_no or lower(emp_email) like @emp_email";
+            var reader = _sql_helper.sql_reader(sql, 
+                                                    new SqlParameter("@emp_no", emp),
+                                                    new SqlParameter("@emp_email","%"+ c_mail +"%")
+                                                    );
+            if (!reader.Read())
+            {
+                return null;
+            }    
+            return new Avc_userinfo
+            {
+                emp_no= reader.GetString(0),
+                emp_name= reader.GetString(1),
+                emp_birthday = reader.GetString(2),
+                emp_inAVCdate = reader.GetString(3),
+                emp_address = reader.GetString(4),
+                emp_qdate = reader.GetString(5),
+                email = reader.GetString(6),
+            };
+        }
     }
 }

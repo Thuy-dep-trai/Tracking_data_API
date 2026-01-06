@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System.Data;
 
 namespace Tracking_data.Hepler
@@ -9,6 +10,15 @@ namespace Tracking_data.Hepler
         public sql_helper(IConfiguration config)
         {
             _config = config;
+        }
+        public SqlDataReader sql_reader(string sql, params SqlParameter[] parameters)
+        {
+            var conn = new SqlConnection(_config.GetConnectionString("SqlServerConnection"));
+            conn.Open();
+
+            var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddRange(parameters);
+            return cmd.ExecuteReader(CommandBehavior.CloseConnection);
         }
         public async Task<DataTable> QuerySqlServerAsync(string query)
         {
