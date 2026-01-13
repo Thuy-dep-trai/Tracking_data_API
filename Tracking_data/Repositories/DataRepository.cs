@@ -49,7 +49,7 @@ namespace Tracking_data.Repositories
 
         public Avc_userinfo user_info(string emp , string c_mail)
         {
-            string sql = "SELECT emp_no , emp_cname , emp_birthday , emp_efdte1 , emp_addr , emp_qdate , emp_email " +
+            string sql = "SELECT emp_no , emp_cname , emp_birthday , emp_efdte1 , emp_haddr , emp_qdate , emp_email " +
                 "FROM RMS.dbo.emp_mstr a " +
                 "where    a.emp_no  = @emp_no or lower(emp_email) like @emp_email";
             var reader = _sql_helper.sql_reader(sql, 
@@ -62,13 +62,13 @@ namespace Tracking_data.Repositories
             }    
             return new Avc_userinfo
             {
-                emp_no= reader.GetString(0),
-                emp_name= reader.GetString(1),
-                emp_birthday = reader.GetString(2),
-                emp_inAVCdate = reader.GetString(3),
-                emp_address = reader.GetString(4),
-                emp_qdate = reader.GetString(5),
-                email = reader.GetString(6),
+                emp_no = reader["emp_no"]?.ToString(),
+                emp_name = reader["emp_cname"]?.ToString(),
+                emp_birthday = reader["emp_birthday"]?.ToString(),
+                emp_inAVCdate = reader["emp_efdte1"]?.ToString(),
+                emp_address = reader["emp_haddr"]?.ToString(),
+                emp_qdate = reader["emp_qdate"]?.ToString(),
+                email = reader["emp_email"]?.ToString(),
             };
         }
     }
